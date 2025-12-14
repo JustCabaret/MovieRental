@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MovieRental.Customer;
 
 namespace MovieRental.Rental
 {
@@ -15,7 +16,11 @@ namespace MovieRental.Rental
 
 		public string PaymentMethod { get; set; }
 
-		// TODO: we should have a table for the customers
-		public string CustomerName { get; set; }
+		//FK to customer
+		[ForeignKey("Customer")]
+		public int CustomerId { get; set; }
+
+		//One rental belongs to one customer
+		public Customer.Customer? Customer { get; set; }
 	}
 }
