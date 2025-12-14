@@ -14,6 +14,8 @@ builder.Services.AddScoped<IMovieFeatures, MovieFeatures>();
 
 var app = builder.Build();
 
+app.UseMiddleware<MovieRental.Middleware.GlobalExceptionHandlerMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
