@@ -23,5 +23,13 @@ namespace MovieRental.Controllers
 	        return Ok(await _features.SaveAsync(rental));
         }
 
+        // Get all rentals for a specific customer
+        [HttpGet("customer/{customerName}")]
+        public async Task<IActionResult> GetByCustomerName(string customerName)
+        {
+            var rentals = await _features.GetRentalsByCustomerNameAsync(customerName);
+            return Ok(rentals);
+        }
+
 	}
 }

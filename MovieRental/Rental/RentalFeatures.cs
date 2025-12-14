@@ -11,6 +11,7 @@ namespace MovieRental.Rental
 			_movieRentalDb = movieRentalDb;
 		}
 
+		// Async method to avoid blocking thread during database I/O
 		public async Task<Rental> SaveAsync(Rental rental)
 		{
 			_movieRentalDb.Rentals.Add(rental);
@@ -18,10 +19,14 @@ namespace MovieRental.Rental
 			return rental;
 		}
 
-		//TODO: finish this method and create an endpoint for it
-		public IEnumerable<Rental> GetRentalsByCustomerName(string customerName)
+		// Query rentals by customer name with related entities loaded
+		public async Task<IEnumerable<Rental>> GetRentalsByCustomerNameAsync(string customerName)
 		{
-			return [];
+			return await _movieRentalDb.Rentals
+				.Include(r => r.Customer)
+				.Include(r => r.Movie)
+				.Where(r => r.Customer != null && r.Customer.Name == customerName)
+				.ToListAsync();
 		}
 
 	}
